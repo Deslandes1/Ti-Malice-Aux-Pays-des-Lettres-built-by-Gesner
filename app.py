@@ -102,7 +102,6 @@ def get_css():
         border-radius: 40px;
         font-weight: bold;
         font-size: 1.1rem;
-        color: #2c2c2c;
     }
     .reading {
         background: #e8f0e0;
@@ -110,7 +109,6 @@ def get_css():
         border-radius: 20px;
         margin-top: 1rem;
         font-style: italic;
-        color: #2c2c2c;
     }
     .footer-note {
         text-align: right;
@@ -118,7 +116,6 @@ def get_css():
         font-size: 0.9rem;
         border-top: 1px solid #ccc;
         padding-top: 0.5rem;
-        color: #ffffff !important;
     }
     /* Text area label white */
     .stTextArea label {
@@ -144,7 +141,7 @@ def get_css():
     div.stButton > button:hover {
         background-color: #f39c12;
     }
-    /* Expander header (chapter titles) already white from global, but ensure */
+    /* Expander headers (Paj 1: Let A, etc.) - force white */
     .streamlit-expanderHeader {
         color: #ffffff !important;
         font-weight: bold !important;
