@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ---------- CUSTOM CSS FOR BACKGROUND & STYLING ----------
+# ---------- CUSTOM CSS FOR BACKGROUND & STRONG WHITE TEXT ----------
 def get_css():
     return """
     <style>
@@ -57,10 +57,27 @@ def get_css():
         box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         border-left: 10px solid #ffaa44;
     }
+    /* All headers and labels inside page-card become white */
+    .page-card h1, .page-card h2, .page-card h3, .page-card h4, .page-card h5, .page-card h6,
+    .page-card p, .page-card div:not(.word-list):not(.reading):not(.footer-note) {
+        color: #ffffff !important;
+    }
+    /* But keep word-list and reading text dark for contrast */
+    .word-list .word {
+        color: #2c2c2c !important;
+    }
+    .reading {
+        color: #2c2c2c !important;
+        background: #e8f0e0;
+    }
+    .footer-note {
+        color: #ffffff !important;
+        border-top-color: #ffaa44;
+    }
     .letter-header {
         font-size: 4rem;
         font-weight: bold;
-        color: #2c5a2e;
+        color: #ffffff !important;
         text-align: center;
         margin-bottom: 0;
     }
@@ -93,21 +110,29 @@ def get_css():
         border-radius: 20px;
         margin-top: 1rem;
         font-style: italic;
+        color: #2c2c2c;
     }
     .footer-note {
         text-align: right;
         margin-top: 1rem;
         font-size: 0.9rem;
-        color: #777;
         border-top: 1px solid #ccc;
         padding-top: 0.5rem;
+        color: #ffffff !important;
+    }
+    /* Text area label white */
+    .stTextArea label {
+        color: #ffffff !important;
+        font-weight: bold !important;
     }
     .stTextArea textarea {
         background-color: #fef9e6;
         border-radius: 20px;
         font-family: monospace;
         font-size: 1rem;
+        color: #000000 !important;
     }
+    /* Button styles */
     div.stButton > button {
         background-color: #e67e22;
         color: white;
@@ -118,6 +143,20 @@ def get_css():
     }
     div.stButton > button:hover {
         background-color: #f39c12;
+    }
+    /* Expander header (chapter titles) already white from global, but ensure */
+    .streamlit-expanderHeader {
+        color: #ffffff !important;
+        font-weight: bold !important;
+        background: linear-gradient(95deg, #ffaa44, #ff7722);
+        border-radius: 30px;
+        font-size: 1.2rem;
+        border: 1px solid #ffaa44;
+        text-shadow: 1px 1px 0 #000000;
+    }
+    /* Global white text for everything not overridden */
+    body, .stMarkdown, .stText, .stTitle {
+        color: #ffffff !important;
     }
     </style>
     """
