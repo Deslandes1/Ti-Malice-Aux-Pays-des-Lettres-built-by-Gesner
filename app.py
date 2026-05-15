@@ -8,6 +8,17 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# ---------- TI MALICE IMAGES (raw GitHub URLs) ----------
+ti_malice_images = [
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2076.JPG",
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2077.JPG",
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2078.JPG",
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2081.JPG",
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2082.JPG",
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2083.JPG",
+    "https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2084.JPG"
+]
+
 # ---------- CUSTOM CSS FOR BACKGROUND & STRONG WHITE TEXT ----------
 def get_css():
     return """
@@ -291,7 +302,7 @@ def book_page():
     st.markdown('<p style="text-align:center; color:#fff; font-size:1.2rem;">Aprann ekri ak li alfabè kreyòl la, paj pa paj.</p>', unsafe_allow_html=True)
     
     with st.sidebar:
-        st.image("https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2077.JPG", use_container_width=True, caption="Ti Malice")
+        st.image(ti_malice_images[1], use_container_width=True, caption="Ti Malice")  # Use IMG_2077 as sidebar logo
         st.markdown("## 🧭 Chapit yo")
         for i, les in enumerate(lessons):
             st.markdown(f"[Paj {i+1}: Let {les['letter']}](#{les['letter']})")
@@ -300,34 +311,43 @@ def book_page():
             st.session_state.page = "login"
             st.rerun()
     
+    # Cycle through Ti Malice images for each page
+    num_images = len(ti_malice_images)
     for idx, les in enumerate(lessons):
         letter = les["letter"]
         words = les["words"]
         reading = les["reading"]
+        # Assign image cyclically (page 0 -> image 0, page 1 -> image 1, etc.)
+        image_idx = idx % num_images
+        page_image = ti_malice_images[image_idx]
         
         with st.expander(f"📄 Paj {idx+1}: Let {letter}", expanded=(idx==0)):
             st.markdown(f'<div class="page-card">', unsafe_allow_html=True)
-            st.markdown(f'<div class="letter-header">{letter}</div>', unsafe_allow_html=True)
-            st.markdown(f'<div class="arrow">↓</div>', unsafe_allow_html=True)
-            st.markdown('<div class="word-list">', unsafe_allow_html=True)
-            for w in words:
-                st.markdown(f'<span class="word">{w}</span>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-            
-            st.markdown("### ✍️ Ede w ekri mo sa yo (Practice writing):")
-            text_val = st.text_area("Kopye mo yo isit la (Copy the words here):", 
-                                     value=st.session_state.writing_texts[idx],
-                                     height=150,
-                                     key=f"write_{idx}")
-            st.session_state.writing_texts[idx] = text_val
-            col_a, col_b = st.columns([1,4])
-            with col_a:
-                if st.button("🗑️ Efase (Erase)", key=f"erase_{idx}"):
-                    erase_text(idx)
-            
-            st.markdown("### 📖 Li ti istwa sa a (Read this story):")
-            st.markdown(f'<div class="reading">📖 {reading}</div>', unsafe_allow_html=True)
-            st.markdown('<div class="footer-note">Written by Gesner Deslandes</div>', unsafe_allow_html=True)
+            col1, col2 = st.columns([2, 1])
+            with col1:
+                st.markdown(f'<div class="letter-header">{letter}</div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="arrow">↓</div>', unsafe_allow_html=True)
+                st.markdown('<div class="word-list">', unsafe_allow_html=True)
+                for w in words:
+                    st.markdown(f'<span class="word">{w}</span>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+                
+                st.markdown("### ✍️ Ede w ekri mo sa yo (Practice writing):")
+                text_val = st.text_area("Kopye mo yo isit la (Copy the words here):", 
+                                         value=st.session_state.writing_texts[idx],
+                                         height=150,
+                                         key=f"write_{idx}")
+                st.session_state.writing_texts[idx] = text_val
+                col_a, col_b = st.columns([1,4])
+                with col_a:
+                    if st.button("🗑️ Efase (Erase)", key=f"erase_{idx}"):
+                        erase_text(idx)
+                
+                st.markdown("### 📖 Li ti istwa sa a (Read this story):")
+                st.markdown(f'<div class="reading">📖 {reading}</div>', unsafe_allow_html=True)
+                st.markdown('<div class="footer-note">Written by Gesner Deslandes</div>', unsafe_allow_html=True)
+            with col2:
+                st.image(page_image, use_container_width=True, caption=f"Ti Malice – Paj {idx+1}")
             st.markdown('</div>', unsafe_allow_html=True)
 
 # ---------- MAIN APP ----------
