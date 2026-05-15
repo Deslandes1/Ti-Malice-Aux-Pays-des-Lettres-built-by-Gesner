@@ -123,7 +123,6 @@ def get_css():
     """
 
 # ---------- DATA FOR 20 LETTERS ----------
-# Each entry: letter, list of 10 words (Haitian Creole), reading passage
 lessons = [
     {   # Page 1: A
         "letter": "A",
@@ -238,7 +237,6 @@ def erase_text(page_idx):
 # ---------- LOGIN PAGE ----------
 def login_page():
     st.markdown(get_css(), unsafe_allow_html=True)
-    # Background image div
     st.markdown('<div class="login-bg"></div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
@@ -256,7 +254,6 @@ def book_page():
     st.markdown('<h1 style="text-align:center; color:#ffdd99; text-shadow: 2px 2px 0 #aa6f20;">📘 Ti Malice Aux pays Des lettres</h1>', unsafe_allow_html=True)
     st.markdown('<p style="text-align:center; color:#fff; font-size:1.2rem;">Aprann ekri ak li alfabè kreyòl la, paj pa paj.</p>', unsafe_allow_html=True)
     
-    # Sidebar navigation
     with st.sidebar:
         st.image("https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2077.JPG", use_container_width=True, caption="Ti Malice")
         st.markdown("## 🧭 Chapit yo")
@@ -267,7 +264,6 @@ def book_page():
             st.session_state.page = "login"
             st.rerun()
     
-    # Display each page as an expandable section
     for idx, les in enumerate(lessons):
         letter = les["letter"]
         words = les["words"]
@@ -275,18 +271,14 @@ def book_page():
         
         with st.expander(f"📄 Paj {idx+1}: Let {letter}", expanded=(idx==0)):
             st.markdown(f'<div class="page-card">', unsafe_allow_html=True)
-            # Letter and arrow
             st.markdown(f'<div class="letter-header">{letter}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="arrow">↓</div>', unsafe_allow_html=True)
-            # Word list
             st.markdown('<div class="word-list">', unsafe_allow_html=True)
             for w in words:
                 st.markdown(f'<span class="word">{w}</span>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
             
-            # Writing practice
             st.markdown("### ✍️ Ede w ekri mo sa yo (Practice writing):")
-            # Text area bound to session state
             text_val = st.text_area("Kopye mo yo isit la (Copy the words here):", 
                                      value=st.session_state.writing_texts[idx],
                                      height=150,
@@ -296,10 +288,9 @@ def book_page():
             with col_a:
                 if st.button("🗑️ Efase (Erase)", key=f"erase_{idx}"):
                     erase_text(idx)
-            # Reading passage
+            
             st.markdown("### 📖 Li ti istwa sa a (Read this story):")
             st.markdown(f'<div class="reading">📖 {reading}</div>', unsafe_allow_html=True)
-            # Footer
             st.markdown('<div class="footer-note">Written by Gesner Deslandes</div>', unsafe_allow_html=True)
             st.markdown('</div>', unsafe_allow_html=True)
 
