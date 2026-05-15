@@ -22,7 +22,7 @@ def get_css():
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url('ti_malice.jpg');
+        background-image: url('https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2077.JPG');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
@@ -238,7 +238,7 @@ def erase_text(page_idx):
 # ---------- LOGIN PAGE ----------
 def login_page():
     st.markdown(get_css(), unsafe_allow_html=True)
-    # Background image div (assumes ti_malice.jpg in same folder)
+    # Background image div
     st.markdown('<div class="login-bg"></div>', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1,2,1])
     with col2:
@@ -258,7 +258,7 @@ def book_page():
     
     # Sidebar navigation
     with st.sidebar:
-        st.image("ti_malice.jpg", use_container_width=True, caption="Ti Malice")
+        st.image("https://raw.githubusercontent.com/Deslandes1/Ti-Malice-Aux-Pays-des-Lettres-built-by-Gesner/main/IMG_2077.JPG", use_container_width=True, caption="Ti Malice")
         st.markdown("## 🧭 Chapit yo")
         for i, les in enumerate(lessons):
             st.markdown(f"[Paj {i+1}: Let {les['letter']}](#{les['letter']})")
