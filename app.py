@@ -152,15 +152,19 @@ def get_css():
     div.stButton > button:hover {
         background-color: #f39c12;
     }
-    /* Expander headers (Paj 1: Let A, etc.) - force white */
-    .streamlit-expanderHeader {
+    /* Expander headers (Paj 1: Let A, etc.) - FORCED STRONG WHITE */
+    .streamlit-expanderHeader,
+    .streamlit-expanderHeader span,
+    .streamlit-expanderHeader p {
         color: #ffffff !important;
         font-weight: bold !important;
+        text-shadow: 1px 1px 0 #000000;
+    }
+    .streamlit-expanderHeader {
         background: linear-gradient(95deg, #ffaa44, #ff7722);
         border-radius: 30px;
         font-size: 1.2rem;
         border: 1px solid #ffaa44;
-        text-shadow: 1px 1px 0 #000000;
     }
     /* Global white text for everything not overridden */
     body, .stMarkdown, .stText, .stTitle {
@@ -302,7 +306,7 @@ def book_page():
     st.markdown('<p style="text-align:center; color:#fff; font-size:1.2rem;">Aprann ekri ak li alfabè kreyòl la, paj pa paj.</p>', unsafe_allow_html=True)
     
     with st.sidebar:
-        st.image(ti_malice_images[1], use_container_width=True, caption="Ti Malice")  # Use IMG_2077 as sidebar logo
+        st.image(ti_malice_images[1], use_container_width=True, caption="Ti Malice")
         st.markdown("## 🧭 Chapit yo")
         for i, les in enumerate(lessons):
             st.markdown(f"[Paj {i+1}: Let {les['letter']}](#{les['letter']})")
@@ -311,13 +315,11 @@ def book_page():
             st.session_state.page = "login"
             st.rerun()
     
-    # Cycle through Ti Malice images for each page
     num_images = len(ti_malice_images)
     for idx, les in enumerate(lessons):
         letter = les["letter"]
         words = les["words"]
         reading = les["reading"]
-        # Assign image cyclically (page 0 -> image 0, page 1 -> image 1, etc.)
         image_idx = idx % num_images
         page_image = ti_malice_images[image_idx]
         
