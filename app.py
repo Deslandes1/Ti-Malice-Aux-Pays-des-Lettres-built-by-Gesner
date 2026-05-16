@@ -307,16 +307,18 @@ lessons = [
     }
 ]
 
-# ---------- SESSION STATE FOR WRITING SECTIONS ----------
-if "writing_texts" not in st.session_state:
-    st.session_state.writing_texts = ["" for _ in range(20)]
+# ---------- SESSION STATE FOR WRITING SECTIONS - we will use widget keys instead of separate list ----------
+# No need for separate writing_texts list – we use st.session_state[f"write_{idx}"] directly
 
 def erase_text(page_idx):
-    st.session_state.writing_texts[page_idx] = ""
+    # Clear the widget's session state key
+    st.session_state[f"write_{page_idx}"] = ""
     st.rerun()
 
 def append_letter(page_idx, letter):
-    st.session_state.writing_texts[page_idx] += letter
+    # Get current text from session state (widget key)
+    current = st.session_state.get(f"write_{page_idx}", "")
+    st.session_state[f"write_{page_idx}"] = current + letter
     st.rerun()
 
 # ---------- COMPLETE 32-LETTER ALPHABET (LOWERCASE) ----------
@@ -383,9 +385,8 @@ def book_page():
                 
                 st.markdown("### ✍️ Ede w ekri mo sa yo (Practice writing):")
                 
-                # ----- ADDED: 32-letter alphabet symbol buttons (LOWERCASE) -----
+                # ----- 32-letter alphabet symbol buttons (LOWERCASE) -----
                 st.markdown("**🔤 Klike sou yon lèt (miniskil) pou mete l nan bwat ekriti a:**")
-                # Create a row of buttons using columns for better layout
                 cols_per_row = 8
                 buttons = ALPHABET_32_LOWERCASE
                 for i in range(0, len(buttons), cols_per_row):
@@ -396,11 +397,13 @@ def book_page():
                                 append_letter(idx, btn)
                 st.markdown("---")
                 
-                text_val = st.text_area("Kopye mo yo isit la (Copy the words here):", 
-                                         value=st.session_state.writing_texts[idx],
-                                         height=150,
-                                         key=f"write_{idx}")
-                st.session_state.writing_texts[idx] = text_val
+                # Text area – use only key; value is stored in session_state under that key
+                st.text_area(
+                    "Kopye mo yo isit la (Copy the words here):",
+                    height=150,
+                    key=f"write_{idx}"
+                )
+                
                 col_a, col_b = st.columns([1,4])
                 with col_a:
                     if st.button("🗑️ Efase (Erase)", key=f"erase_{idx}"):
