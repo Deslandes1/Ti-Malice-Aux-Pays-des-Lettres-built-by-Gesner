@@ -177,6 +177,29 @@ def get_css():
     body, .stMarkdown, .stText, .stTitle {
         color: #ffffff !important;
     }
+    /* Style for alphabet symbol buttons */
+    .alphabet-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 10px 0;
+        justify-content: center;
+    }
+    .alphabet-btn {
+        background-color: #ffaa44;
+        border: none;
+        border-radius: 50px;
+        padding: 8px 14px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        color: #2c2c2c;
+    }
+    .alphabet-btn:hover {
+        background-color: #e67e22;
+        transform: scale(1.05);
+    }
     </style>
     """
 
@@ -292,6 +315,17 @@ def erase_text(page_idx):
     st.session_state.writing_texts[page_idx] = ""
     st.rerun()
 
+def append_letter(page_idx, letter):
+    st.session_state.writing_texts[page_idx] += letter
+    st.rerun()
+
+# ---------- COMPLETE 32-LETTER ALPHABET ----------
+ALPHABET_32 = [
+    "A", "AN", "B", "CH", "D", "E", "È", "EN", "F", "G", "H", "I",
+    "J", "K", "L", "M", "N", "NG", "O", "Ò", "ON", "OU", "OUN", "P",
+    "R", "S", "T", "UI", "V", "W", "Y", "Z"
+]
+
 # ---------- LOGIN PAGE ----------
 def login_page():
     st.markdown(get_css(), unsafe_allow_html=True)
@@ -310,7 +344,6 @@ def login_page():
 def book_page():
     st.markdown(get_css(), unsafe_allow_html=True)
     st.markdown('<h1 style="text-align:center; color:#ffdd99; text-shadow: 2px 2px 0 #aa6f20;">📘 Ti Malice Aux pays Des lettres</h1>', unsafe_allow_html=True)
-    # ADDED: Subtitle with builder name and contact info
     st.markdown('<p class="top-subtitle">built by Gesner Deslandes | 📞 (509)-47385663 | ✉️ deslandes78@gmail.com</p>', unsafe_allow_html=True)
     st.markdown('<p style="text-align:center; color:#fff; font-size:1.2rem;">Aprann ekri ak li alfabè kreyòl la, paj pa paj.</p>', unsafe_allow_html=True)
     
@@ -320,7 +353,6 @@ def book_page():
         for i, les in enumerate(lessons):
             st.markdown(f"[Paj {i+1}: Let {les['letter']}](#{les['letter']})")
         st.markdown("---")
-        # ADDED: Contact info in sidebar
         st.markdown("### 📞 Kontak / Contact")
         st.markdown("**Gesner Deslandes**  \n"
                     "📱 (509)-47385663  \n"
@@ -350,6 +382,20 @@ def book_page():
                 st.markdown('</div>', unsafe_allow_html=True)
                 
                 st.markdown("### ✍️ Ede w ekri mo sa yo (Practice writing):")
+                
+                # ----- ADDED: 32-letter alphabet symbol buttons -----
+                st.markdown("**🔤 Klike sou yon lèt pou mete l nan bwat ekriti a:**")
+                # Create a row of buttons using columns for better layout
+                cols_per_row = 8
+                buttons = ALPHABET_32
+                for i in range(0, len(buttons), cols_per_row):
+                    row_cols = st.columns(cols_per_row)
+                    for j, btn in enumerate(buttons[i:i+cols_per_row]):
+                        with row_cols[j]:
+                            if st.button(btn, key=f"alpha_{idx}_{btn}"):
+                                append_letter(idx, btn)
+                st.markdown("---")
+                
                 text_val = st.text_area("Kopye mo yo isit la (Copy the words here):", 
                                          value=st.session_state.writing_texts[idx],
                                          height=150,
