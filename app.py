@@ -60,6 +60,13 @@ def get_css():
         font-size: 1.2rem;
         color: #ffeecc;
     }
+    .top-subtitle {
+        text-align: center;
+        color: #ffdd99;
+        font-size: 0.9rem;
+        margin-top: -0.5rem;
+        margin-bottom: 1rem;
+    }
     .page-card {
         background: #fffef7;
         border-radius: 30px;
@@ -303,6 +310,8 @@ def login_page():
 def book_page():
     st.markdown(get_css(), unsafe_allow_html=True)
     st.markdown('<h1 style="text-align:center; color:#ffdd99; text-shadow: 2px 2px 0 #aa6f20;">📘 Ti Malice Aux pays Des lettres</h1>', unsafe_allow_html=True)
+    # ADDED: Subtitle with builder name and contact info
+    st.markdown('<p class="top-subtitle">built by Gesner Deslandes | 📞 (509)-47385663 | ✉️ deslandes78@gmail.com</p>', unsafe_allow_html=True)
     st.markdown('<p style="text-align:center; color:#fff; font-size:1.2rem;">Aprann ekri ak li alfabè kreyòl la, paj pa paj.</p>', unsafe_allow_html=True)
     
     with st.sidebar:
@@ -310,6 +319,12 @@ def book_page():
         st.markdown("## 🧭 Chapit yo")
         for i, les in enumerate(lessons):
             st.markdown(f"[Paj {i+1}: Let {les['letter']}](#{les['letter']})")
+        st.markdown("---")
+        # ADDED: Contact info in sidebar
+        st.markdown("### 📞 Kontak / Contact")
+        st.markdown("**Gesner Deslandes**  \n"
+                    "📱 (509)-47385663  \n"
+                    "✉️ deslandes78@gmail.com")
         st.markdown("---")
         if st.button("🚪 Soti (Exit)"):
             st.session_state.page = "login"
