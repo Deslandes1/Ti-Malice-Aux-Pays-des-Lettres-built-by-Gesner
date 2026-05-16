@@ -319,11 +319,11 @@ def append_letter(page_idx, letter):
     st.session_state.writing_texts[page_idx] += letter
     st.rerun()
 
-# ---------- COMPLETE 32-LETTER ALPHABET ----------
-ALPHABET_32 = [
-    "A", "AN", "B", "CH", "D", "E", "È", "EN", "F", "G", "H", "I",
-    "J", "K", "L", "M", "N", "NG", "O", "Ò", "ON", "OU", "OUN", "P",
-    "R", "S", "T", "UI", "V", "W", "Y", "Z"
+# ---------- COMPLETE 32-LETTER ALPHABET (LOWERCASE) ----------
+ALPHABET_32_LOWERCASE = [
+    "a", "an", "b", "ch", "d", "e", "è", "en", "f", "g", "h", "i",
+    "j", "k", "l", "m", "n", "ng", "o", "ò", "on", "ou", "oun", "p",
+    "r", "s", "t", "ui", "v", "w", "y", "z"
 ]
 
 # ---------- LOGIN PAGE ----------
@@ -383,11 +383,11 @@ def book_page():
                 
                 st.markdown("### ✍️ Ede w ekri mo sa yo (Practice writing):")
                 
-                # ----- ADDED: 32-letter alphabet symbol buttons -----
-                st.markdown("**🔤 Klike sou yon lèt pou mete l nan bwat ekriti a:**")
+                # ----- ADDED: 32-letter alphabet symbol buttons (LOWERCASE) -----
+                st.markdown("**🔤 Klike sou yon lèt (miniskil) pou mete l nan bwat ekriti a:**")
                 # Create a row of buttons using columns for better layout
                 cols_per_row = 8
-                buttons = ALPHABET_32
+                buttons = ALPHABET_32_LOWERCASE
                 for i in range(0, len(buttons), cols_per_row):
                     row_cols = st.columns(cols_per_row)
                     for j, btn in enumerate(buttons[i:i+cols_per_row]):
